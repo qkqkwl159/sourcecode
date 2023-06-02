@@ -1,0 +1,3 @@
+ID: KMU_ID / 나이:20 / HP: 2448 / 좌표: 1.234, 3.131
+등록된 동맹 수 : 3명
+MY_FRIEND_1 / MY_FRIEND_2 / MY_FRIEND_3
