@@ -6,8 +6,10 @@ typedef struct _User{
 		char id[255];
 		char age[255];
 		char HP[255];
-		double xp, yp;
+		char xp[100];
+		char yp[100];
 		char* friend[255];
+		char buffer[255];
 }User;
 
 int main() {
@@ -33,30 +35,80 @@ int main() {
 
 			if(menu == 1){
 				User u1;
-				int cnt = 0;
-				char* con;
+				int cnt = 1;
+				char con[10];
 				
 				printf("ID를 입력하세요: ");
 				scanf("%s",u1.id);
+				strcat(u1.id,",");
+				strcpy(u1.buffer,u1.id);
+
+				printf("%s\n",u1.buffer);
+
 				printf("나이를 입력하세요: ");
 				scanf("%s",u1.age);
+				strcat(u1.age,",");
+				strcat(u1.buffer,u1.age);
+
+				printf("%s\n",u1.buffer);
+
 				printf("HP를 입력하세요: ");
 				scanf("%s",u1.HP);
+				strcat(u1.HP,",");
+				strcat(u1.buffer,u1.HP);
+
+				printf("%s\n",u1.buffer);
+
 				printf("X좌표를 입력하세요: ");
-				scanf("%lf",&u1.xp);
+				scanf("%s",u1.xp);
+				strcat(u1.xp,",");
+				strcat(u1.buffer,u1.xp);
+
+				printf("%s\n",u1.buffer);
+
 				printf("Y좌표를 입력하세요: ");
-				scanf("%lf",&u1.yp);
-				while(1){
-					printf("동맹 ID를 입력하세요:");
-					scanf("%s",u1.friend[cnt++]);
-					printf("동맹을 계속 추가할까요?:");
-					scanf("%s",con);
-					if(!strcmp(con,"Y")) break;
-				}
+				scanf("%s",u1.yp);
+				strcat(u1.yp,",");
+				strcat(u1.buffer,u1.yp);
+
+				printf("%s\n",u1.buffer);
+
+//				while(1){
+//					printf("동맹 ID를 입력하세요:");
+//					scanf("%s",u1.friend[cnt++]);
+//					strcat(u1.friend[cnt],",");
+//					strcat(u1.buffer,u1.friend[cnt]);
+//
+//					printf("동맹을 계속 추가할까요?:");
+//					scanf("%s",con);
+//					if(!strcmp(con,"N")) break;
+//				}
+				fwrite(&u1.buffer, sizeof(u1.buffer),1,file);
+
 				break;
 			}
 			if(menu == 2){
-				printf("2\n");
+				FILE* file = fopen("userdata.bin", "rb"); // 읽기 모드로 바이너리 파일 열기
+
+				if (file == NULL) {
+						printf("파일을 열 수 없습니다.\n");
+						return 1;
+				}
+
+				// 파일 내용 읽기
+				User data;
+
+				while (fread(&data, sizeof(data), 1, file) == 1) {
+						// 데이터 파싱 및 출력
+						printf("ID: %s\n", data.id);
+						printf("Age: %s\n", data.age);
+						printf("HP: %s\n", data.HP);
+						printf("XP: %s\n", data.xp);
+						printf("YP: %s\n", data.yp);
+						printf("\n");
+				}
+				// 파일 닫기
+				fclose(file);
 			}
 			if(menu == 3){
 				return 0;
