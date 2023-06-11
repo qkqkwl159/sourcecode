@@ -2,6 +2,21 @@
 #include <string.h>
 #include <stdlib.h>
 
+char setnumber(char c){ //반복할 숫자를 int로 변경
+    char h = c;
+
+	if(c == '0') h=')';
+    else if(c == '1') h='!';	
+    else if(c == '2') h='@';
+    else if(c == '3') h='#';
+    else if(c == '4') h='$';
+    else if(c == '5') h='%';
+    else if(c == '6') h='`';
+    else if(c == '7') h='&';
+    else if(c == '8') h='*';
+    else if(c == '9') h='(';
+    return h;
+}
 
 char* rle_encode(const char* str) {
     int len = strlen(str);
@@ -15,15 +30,19 @@ char* rle_encode(const char* str) {
     char* encoded = (char*)malloc(sizeof(char) * (len * 2 + 1));
     int encoded_index = 0;
 
+		
     char prev = str[0];
+		char temp ;
     int count = 1;
 
     for (int i = 1; i < len; i++) {
-        if (str[i] == prev) {
+			  temp = setnumber(str[i]);
+				printf("%c\n",temp);
+        if (temp == prev) {
             count++;
         } else {
             encoded_index += sprintf(encoded + encoded_index, "%c%d", prev, count);
-            prev = str[i];
+            prev = temp;
             count = 1;
         }
     }
@@ -115,7 +134,7 @@ int main(){
 				strcat(result,"^");
 				strcat(introResult,result);
 				printf("%s\n", result);
-				//free(result);
+				free(result);
 
 			}
     }
